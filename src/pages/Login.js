@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Login.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { login as loginAction } from '../actions/index';
 
 class Login extends Component {
   constructor(props) {
@@ -34,7 +36,13 @@ class Login extends Component {
   }
 
   handleSubmmit() {
-    const { history } = this.props;
+    const { email, password } = this.state;
+    const { login, history } = this.props;
+
+    login({
+      email,
+      password,
+    });
     history.push('/carteira');
   }
 
@@ -50,6 +58,7 @@ class Login extends Component {
               placeholder="exemple@exemple.com"
               type="email"
               name="email"
+              id="email"
               onChange={ this.handleChange }
             />
           </label>
@@ -57,16 +66,17 @@ class Login extends Component {
           <label htmlFor="password">
             Senha:
             <input
-              placeholder="senha"
               data-testid="password-input"
+              placeholder="senha"
               type="password"
               name="password"
+              id="password"
               onChange={ this.handleChange }
             />
           </label>
 
           <button
-            type="submit"
+            type="button"
             disabled={ email === '' || password === '' }
             onClick={ this.handleSubmmit }
           >
@@ -79,7 +89,12 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  login: PropTypes.func.isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  login: (payload) => dispatch(loginAction(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
