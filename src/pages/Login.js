@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Login.css';
-// regex tirado do site https://www.w3resource.com/javascript/form/email-validation.php;
-const mailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+import PropTypes from 'prop-types';
 
 class Login extends Component {
   constructor(props) {
@@ -9,26 +8,17 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      btnDisable: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmmit = this.handleSubmmit.bind(this);
   }
 
-  componentDidUpdate() {
-    const { email, password } = this.state;
-
-    if (email && password) {
-      this.setState({
-        btnDisable: false,
-      });
-    }
-  }
-
   handleChange({ target }) {
     const { name, value } = target;
     const MIN_PASSWORD_LENGTH = 6;
+    // regex tirado do site https://www.w3resource.com/javascript/form/email-validation.php;
+    const mailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
     if (name === 'email' && value.match(mailFormat)) {
       this.setState({
@@ -44,11 +34,12 @@ class Login extends Component {
   }
 
   handleSubmmit() {
-
+    const { history } = this.props;
+    history.push('/carteira');
   }
 
   render() {
-    const { btnDisable } = this.state;
+    const { email, password } = this.state;
     return (
       <div className="container ">
         <div className="login-container">
@@ -56,6 +47,7 @@ class Login extends Component {
             E-mail:
             <input
               data-testid="email-input"
+              placeholder="exemple@exemple.com"
               type="email"
               name="email"
               onChange={ this.handleChange }
@@ -65,6 +57,7 @@ class Login extends Component {
           <label htmlFor="password">
             Senha:
             <input
+              placeholder="senha"
               data-testid="password-input"
               type="password"
               name="password"
@@ -74,7 +67,7 @@ class Login extends Component {
 
           <button
             type="submit"
-            disabled={ btnDisable }
+            disabled={ email === '' || password === '' }
             onClick={ this.handleSubmmit }
           >
             Entrar
@@ -84,5 +77,9 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default Login;
