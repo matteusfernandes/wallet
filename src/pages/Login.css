@@ -1,5 +1,5 @@
 body {
-    margin: 0;
+  margin: 0;
 }
 
 .container {
@@ -10,25 +10,25 @@ body {
 }
 
 .login-container {
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   align-self: center;
   border: solid 1px black;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
 }
 
 button {
-  padding: 8px;
-  width: 80px;
-  font-size: 15px;
-  font-weight: bold;
   background-color: green;
   color: white;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 8px;
+  width: 80px;
 }
 
 input {
-  padding: 5px;
-  margin-left: 5px;
   margin-bottom: 5px;
+  margin-left: 5px;
+  padding: 5px;
 }
