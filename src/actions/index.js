@@ -1,11 +1,8 @@
 import { getCurrency } from '../services/currencyAPI';
 
-const ACTIONS = {
-  LOGIN: 'LOGIN',
-  GET_CURRENCIES: 'GET_CURRENCIES',
-};
-
+export const LOGIN = 'LOGIN';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
+export const SET_EXPENSES = 'SET_EXPENSES';
 
 export const login = (value) => ({
   type: 'LOGIN',
@@ -17,10 +14,13 @@ export const getCurrencies = (value) => ({
   data: value,
 });
 
+export const setExpenses = (value) => ({
+  type: 'SET_EXPENSES',
+  data: value,
+});
+
 export const getCurrencyThunk = () => async (dispatch) => {
   const response = await getCurrency();
   const payload = response;
   dispatch(getCurrencies(payload));
 };
-
-export default ACTIONS;

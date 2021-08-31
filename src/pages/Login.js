@@ -84,6 +84,7 @@ class Login extends Component {
           />
 
           <button
+            className="btn-login"
             type="button"
             disabled={ !emailIsValid || !passwordIsValid }
             onClick={ this.handleSubmmit }

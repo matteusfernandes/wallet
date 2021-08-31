@@ -5,26 +5,28 @@ import PropTypes from 'prop-types';
 import Input from '../components/Input';
 import Header from '../components/Header';
 import Select from '../components/Select';
-import { getCurrencyThunk } from '../actions';
+import { getCurrencyThunk, setExpenses as setExpensesAction } from '../actions';
 
 const PAYMENT_METHODS = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
 const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+const INNITIAL_STATE = {
+  expenseAmount: 0,
+  description: '',
+  currency: 'USD',
+  payment: 'Dinheiro',
+  tag: 'Alimentação',
+};
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      expenseAmount: 0,
-      description: '',
-      currency: 'USD',
-      payment: 'Dinheiro',
-      tag: 'Alimentação',
-    };
+    this.state = INNITIAL_STATE;
 
     this.renderInputs = this.renderInputs.bind(this);
     this.renderSelects = this.renderSelects.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmmit = this.handleSubmmit.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +41,22 @@ class Wallet extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleSubmmit() {
+    const { expenseAmount, description, currency, payment, tag } = this.state;
+    const { expenses, setExpenses } = this.props;
+
+    setExpenses({
+      id: expenses.length,
+      expenseAmount,
+      description,
+      currency,
+      payment,
+      tag,
+    });
+
+    this.setState(INNITIAL_STATE);
   }
 
   renderInputs() {
@@ -112,6 +130,14 @@ class Wallet extends React.Component {
         <form>
           {this.renderInputs()}
           {this.renderSelects()}
+
+          <button
+            type="button"
+            className="btn-submmit"
+            onClick={ this.handleSubmmit }
+          >
+            Adicionar Despesa
+          </button>
         </form>
       </div>
     );
@@ -122,12 +148,14 @@ Wallet.propTypes = {
   getCurrencies: PropTypes.func,
 }.isRequired;
 
-const mapStateToProps = ({ wallet: { currencies } }) => ({
+const mapStateToProps = ({ wallet: { currencies, expenses } }) => ({
   currencies,
+  expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(getCurrencyThunk()),
+  setExpenses: (payload) => dispatch(setExpensesAction(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
