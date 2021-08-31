@@ -36,12 +36,11 @@ class Login extends Component {
   }
 
   handleSubmmit() {
-    const { email, password } = this.state;
+    const { email } = this.state;
     const { login, history } = this.props;
 
     login({
       email,
-      password,
     });
     history.push('/carteira');
   }

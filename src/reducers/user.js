@@ -1,6 +1,5 @@
 const INITIAL_STATE = {
   email: '',
-  password: '',
 };
 
 function userReducer(state = INITIAL_STATE, action) {
@@ -9,7 +8,6 @@ function userReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       email: action.data.email,
-      password: action.data.password,
     };
   default:
     return state;
