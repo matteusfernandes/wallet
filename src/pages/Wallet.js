@@ -7,6 +7,9 @@ import Header from '../components/Header';
 import Select from '../components/Select';
 import { getCurrencyThunk } from '../actions';
 
+const PAYMENT_METHODS = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
+const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
@@ -67,7 +70,7 @@ class Wallet extends React.Component {
           id="pay"
           value=""
           onChange=""
-          options={ [] }
+          options={ PAYMENT_METHODS }
         />
 
         <Select
@@ -76,7 +79,7 @@ class Wallet extends React.Component {
           id="tag"
           value=""
           onChange=""
-          options={ [] }
+          options={ TAGS }
         />
       </div>
     );
