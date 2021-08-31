@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Login.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Input from '../components/Input';
 import { login as loginAction } from '../actions/index';
 import loginLogo from '../assets/loginLogo.png';
 
@@ -11,6 +12,8 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      emailIsValid: false,
+      passwordIsValid: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,16 +25,20 @@ class Login extends Component {
     const MIN_PASSWORD_LENGTH = 6;
     // regex tirado do site https://www.w3resource.com/javascript/form/email-validation.php;
     const mailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const emailIsValid = mailFormat.test(value);
+    const passwordIsValid = value.length >= MIN_PASSWORD_LENGTH;
 
-    if (name === 'email' && value.match(mailFormat)) {
+    if (name === 'email') {
       this.setState({
         [name]: value,
+        emailIsValid,
       });
     }
 
-    if (name === 'password' && value.length >= MIN_PASSWORD_LENGTH) {
+    if (name === 'password') {
       this.setState({
         [name]: value,
+        passwordIsValid,
       });
     }
   }
@@ -47,38 +54,37 @@ class Login extends Component {
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, emailIsValid, passwordIsValid } = this.state;
     return (
       <div className="container ">
         <div className="login-container">
           <img className="login-img" src={ loginLogo } alt="Logo da trybe" />
-          <label htmlFor="email">
-            E-mail:
-            <input
-              data-testid="email-input"
-              placeholder="exemple@exemple.com"
-              type="email"
-              name="email"
-              id="email"
-              onChange={ this.handleChange }
-            />
-          </label>
 
-          <label htmlFor="password">
-            Senha:
-            <input
-              data-testid="password-input"
-              placeholder="senha"
-              type="password"
-              name="password"
-              id="password"
-              onChange={ this.handleChange }
-            />
-          </label>
+          <Input
+            labelTitle="E-mail:"
+            testId="email-input"
+            placeholder="exemple@exemple.com"
+            type="email"
+            name="email"
+            id="email"
+            value={ email }
+            onChange={ this.handleChange }
+          />
+
+          <Input
+            labelTitle="Senha:"
+            testId="password-input"
+            placeholder="senha"
+            type="password"
+            name="password"
+            id="password"
+            value={ password }
+            onChange={ this.handleChange }
+          />
 
           <button
             type="button"
-            disabled={ email === '' || password === '' }
+            disabled={ !emailIsValid || !passwordIsValid }
             onClick={ this.handleSubmmit }
           >
             Entrar
