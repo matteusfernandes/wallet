@@ -3,6 +3,7 @@ import './Login.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { login as loginAction } from '../actions/index';
+import loginLogo from '../assets/loginLogo.png';
 
 class Login extends Component {
   constructor(props) {
@@ -50,6 +51,7 @@ class Login extends Component {
     return (
       <div className="container ">
         <div className="login-container">
+          <img className="login-img" src={ loginLogo } alt="Logo da trybe" />
           <label htmlFor="email">
             E-mail:
             <input
