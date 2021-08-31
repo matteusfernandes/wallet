@@ -6,6 +6,7 @@ import Input from '../components/Input';
 import Header from '../components/Header';
 import Select from '../components/Select';
 import { getCurrencyThunk, setExpensesThunk } from '../actions';
+import TableOfExpenses from '../components/TableOfExpenses';
 
 const PAYMENT_METHODS = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -139,6 +140,7 @@ class Wallet extends React.Component {
             Adicionar Despesa
           </button>
         </form>
+        <TableOfExpenses />
       </div>
     );
   }
