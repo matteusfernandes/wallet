@@ -1,42 +1,87 @@
 import React from 'react';
 import './Wallet.css';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import logo from '../assets/logo.png';
-import wallet from '../assets/wallet.png';
+import Input from '../components/Input';
+import Header from '../components/Header';
+import Select from '../components/Select';
 
 class Wallet extends React.Component {
-  render() {
-    const { email } = this.props;
+  constructor(props) {
+    super(props);
 
+    this.renderInputs = this.renderInputs.bind(this);
+    this.renderSelects = this.renderSelects.bind(this);
+  }
+
+  renderInputs() {
     return (
       <div>
-        <header>
-          <img className="trybe-logo" src={ logo } alt="Logo da trybe" />
-          <div className="right-header-container">
-            <div className="email-container">
-              <img className="icon" src={ wallet } alt="Imagem de uma carteira" />
-              <p>E-mail:</p>
-              <div data-testid="email-field">{ email }</div>
-            </div>
-            <div className="expense-container">
-              <p>Despesa Total:</p>
-              <p data-testid="total-field">0</p>
-              <p data-testid="header-currency-field">BRL</p>
-            </div>
-          </div>
-        </header>
+        <Input
+          labelTitle="Valor:"
+          placeholder=""
+          type="text"
+          name="valor"
+          id="valor"
+          value=""
+          onChange=""
+        />
+
+        <Input
+          labelTitle="Descrição:"
+          placeholder=""
+          type="text"
+          name="description"
+          id="description"
+          value=""
+          onChange=""
+        />
+      </div>
+    );
+  }
+
+  renderSelects() {
+    return (
+      <div>
+        <Select
+          labelTitle="Moeda:"
+          name="moeda"
+          id="moeda"
+          value=""
+          onChange=""
+          options={ [] }
+        />
+
+        <Select
+          labelTitle="Método de Pagamento:"
+          name="pay"
+          id="pay"
+          value=""
+          onChange=""
+          options={ [] }
+        />
+
+        <Select
+          labelTitle="Tag:"
+          name="tag"
+          id="tag"
+          value=""
+          onChange=""
+          options={ [] }
+        />
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div>
+        <Header />
+        <form>
+          {this.renderInputs()}
+          {this.renderSelects()}
+        </form>
       </div>
     );
   }
 }
 
-Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = ({ user }) => ({
-  email: user.email,
-});
-
-export default connect(mapStateToProps)(Wallet);
+export default Wallet;
