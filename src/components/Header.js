@@ -6,8 +6,20 @@ import logo from '../assets/logo.png';
 import wallet from '../assets/wallet.png';
 
 class Wallet extends React.Component {
+  sumTotalExpenses() {
+    const { expenses } = this.props;
+
+    return expenses.reduce((current, { value, currency, exchangeRates }) => {
+      const convertedAmount = value * exchangeRates[currency].ask;
+
+      return current + convertedAmount;
+    }, 0);
+  }
+
   render() {
     const { email } = this.props;
+
+    const total = this.sumTotalExpenses();
 
     return (
       <header>
@@ -20,7 +32,7 @@ class Wallet extends React.Component {
           </div>
           <div className="expense-container">
             <p>Despesa Total:</p>
-            <p data-testid="total-field">0</p>
+            <p data-testid="total-field">{ total.toFixed(2) }</p>
             <p data-testid="header-currency-field">BRL</p>
           </div>
         </div>
@@ -30,11 +42,13 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-};
+  email: PropTypes.string,
+  expenses: PropTypes.arrayOf(PropTypes.object),
+}.isRequired;
 
-const mapStateToProps = ({ user }) => ({
-  email: user.email,
+const mapStateToProps = ({ user: { email }, wallet: { expenses } }) => ({
+  email,
+  expenses,
 });
 
 export default connect(mapStateToProps)(Wallet);

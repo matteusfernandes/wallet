@@ -7,14 +7,14 @@ import Header from '../components/Header';
 import Select from '../components/Select';
 import { getCurrencyThunk, setExpensesThunk } from '../actions';
 
-const PAYMENT_METHODS = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
+const PAYMENT_METHODS = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 const INNITIAL_STATE = {
-  expenseAmount: 0,
+  value: 0,
   description: '',
   currency: 'USD',
-  payment: 'Dinheiro',
-  tag: 'Alimentação',
+  method: '',
+  tag: '',
 };
 
 class Wallet extends React.Component {
@@ -44,15 +44,15 @@ class Wallet extends React.Component {
   }
 
   handleSubmmit() {
-    const { expenseAmount, description, currency, payment, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { expenses, setExpenses } = this.props;
 
     setExpenses({
       id: expenses.length,
-      expenseAmount,
+      value,
       description,
       currency,
-      payment,
+      method,
       tag,
     });
 
@@ -60,7 +60,7 @@ class Wallet extends React.Component {
   }
 
   renderInputs() {
-    const { expenseAmount, description } = this.state;
+    const { value, description } = this.state;
 
     return (
       <div>
@@ -68,9 +68,9 @@ class Wallet extends React.Component {
           labelTitle="Valor:"
           placeholder=""
           type="number"
-          name="expenseAmount"
-          id="expenseAmount"
-          value={ expenseAmount }
+          name="value"
+          id="value"
+          value={ value }
           onChange={ this.handleChange }
         />
 
@@ -89,7 +89,7 @@ class Wallet extends React.Component {
 
   renderSelects() {
     const { currencies } = this.props;
-    const { currency, payment, tag } = this.props;
+    const { currency, method, tag } = this.props;
 
     return (
       <div>
@@ -104,9 +104,9 @@ class Wallet extends React.Component {
 
         <Select
           labelTitle="Método de Pagamento:"
-          name="payment"
+          name="method"
           id="pay"
-          value={ payment }
+          value={ method }
           onChange={ this.handleChange }
           options={ PAYMENT_METHODS }
         />
