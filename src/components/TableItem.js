@@ -14,7 +14,7 @@ class TableItem extends Component {
         method,
         tag,
         exchangeRates,
-      }} = this.props;
+      } } = this.props;
 
     const [currencyName] = exchangeRates[currency].name.split('/');
     const { ask } = exchangeRates[currency];
