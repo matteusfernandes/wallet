@@ -14,8 +14,8 @@ const INNITIAL_STATE = {
   value: 0,
   description: '',
   currency: 'USD',
-  method: '',
-  tag: '',
+  method: 'Dinheiro',
+  tag: 'Alimentação',
 };
 
 class Wallet extends React.Component {
@@ -106,7 +106,7 @@ class Wallet extends React.Component {
         <Select
           labelTitle="Método de Pagamento:"
           name="method"
-          id="pay"
+          id="method"
           value={ method }
           onChange={ this.handleChange }
           options={ PAYMENT_METHODS }
