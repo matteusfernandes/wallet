@@ -4,9 +4,7 @@ export const getCurrency = async () => {
   const response = await fetch(CURRENCY_BASE_URL);
   const data = await response.json();
 
-  return (
-    Object.keys(data).filter((currency) => currency !== 'USDT')
-  );
+  return data;
 };
 
 export default getCurrency;

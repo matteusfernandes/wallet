@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Input from '../components/Input';
 import Header from '../components/Header';
 import Select from '../components/Select';
-import { getCurrencyThunk, setExpenses as setExpensesAction } from '../actions';
+import { getCurrencyThunk, setExpensesThunk } from '../actions';
 
 const PAYMENT_METHODS = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
 const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -155,7 +155,7 @@ const mapStateToProps = ({ wallet: { currencies, expenses } }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(getCurrencyThunk()),
-  setExpenses: (payload) => dispatch(setExpensesAction(payload)),
+  setExpenses: (payload) => dispatch(setExpensesThunk(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

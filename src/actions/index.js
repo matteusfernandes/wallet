@@ -19,8 +19,14 @@ export const setExpenses = (value) => ({
   data: value,
 });
 
+export const setExpensesThunk = (value) => async (dispatch) => {
+  const response = await getCurrency();
+  const exchangeRates = response;
+  dispatch(setExpenses({ ...value, exchangeRates }));
+};
+
 export const getCurrencyThunk = () => async (dispatch) => {
   const response = await getCurrency();
   const payload = response;
-  dispatch(getCurrencies(payload));
+  dispatch(getCurrencies(Object.keys(payload).filter((currency) => currency !== 'USDT')));
 };
