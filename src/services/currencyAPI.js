@@ -1,11 +1,12 @@
 const CURRENCY_BASE_URL = 'https://economia.awesomeapi.com.br/json/all';
 
-export const getCurrency = () => (
-  fetch(CURRENCY_BASE_URL)
-    .then((response) => (
-      response.json()
-        .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
-    ))
-);
+export const getCurrency = async () => {
+  const response = await fetch(CURRENCY_BASE_URL);
+  const data = await response.json();
+
+  return (
+    Object.keys(data).filter((currency) => currency !== 'USDT')
+  );
+};
 
 export default getCurrency;

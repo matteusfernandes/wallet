@@ -1,8 +1,11 @@
 import React from 'react';
 import './Wallet.css';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Input from '../components/Input';
 import Header from '../components/Header';
 import Select from '../components/Select';
+import { getCurrencyThunk } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -10,6 +13,12 @@ class Wallet extends React.Component {
 
     this.renderInputs = this.renderInputs.bind(this);
     this.renderSelects = this.renderSelects.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+
+    getCurrencies();
   }
 
   renderInputs() {
@@ -39,6 +48,8 @@ class Wallet extends React.Component {
   }
 
   renderSelects() {
+    const { currencies } = this.props;
+
     return (
       <div>
         <Select
@@ -47,7 +58,7 @@ class Wallet extends React.Component {
           id="moeda"
           value=""
           onChange=""
-          options={ [] }
+          options={ currencies }
         />
 
         <Select
@@ -84,4 +95,16 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+Wallet.propTypes = {
+  getCurrencies: PropTypes.func,
+}.isRequired;
+
+const mapStateToProps = ({ wallet: { currencies } }) => ({
+  currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(getCurrencyThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
