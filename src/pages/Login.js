@@ -9,6 +9,7 @@ import loginLogo from '../assets/loginLogo.png';
 class Login extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       email: '',
       password: '',
@@ -96,9 +97,9 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-};
+  login: PropTypes.func,
+  history: PropTypes.objectOf(PropTypes.any),
+}.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
   login: (payload) => dispatch(loginAction(payload)),

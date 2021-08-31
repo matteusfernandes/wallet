@@ -14,8 +14,17 @@ class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      expenseAmount: 0,
+      description: '',
+      currency: 'USD',
+      payment: 'Dinheiro',
+      tag: 'Alimentação',
+    };
+
     this.renderInputs = this.renderInputs.bind(this);
     this.renderSelects = this.renderSelects.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -24,17 +33,27 @@ class Wallet extends React.Component {
     getCurrencies();
   }
 
+  handleChange({ target }) {
+    const { name, value } = target;
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
   renderInputs() {
+    const { expenseAmount, description } = this.state;
+
     return (
       <div>
         <Input
           labelTitle="Valor:"
           placeholder=""
-          type="text"
-          name="valor"
-          id="valor"
-          value=""
-          onChange=""
+          type="number"
+          name="expenseAmount"
+          id="expenseAmount"
+          value={ expenseAmount }
+          onChange={ this.handleChange }
         />
 
         <Input
@@ -43,8 +62,8 @@ class Wallet extends React.Component {
           type="text"
           name="description"
           id="description"
-          value=""
-          onChange=""
+          value={ description }
+          onChange={ this.handleChange }
         />
       </div>
     );
@@ -52,24 +71,25 @@ class Wallet extends React.Component {
 
   renderSelects() {
     const { currencies } = this.props;
+    const { currency, payment, tag } = this.props;
 
     return (
       <div>
         <Select
           labelTitle="Moeda:"
-          name="moeda"
+          name="currency"
           id="moeda"
-          value=""
-          onChange=""
+          value={ currency }
+          onChange={ this.handleChange }
           options={ currencies }
         />
 
         <Select
           labelTitle="Método de Pagamento:"
-          name="pay"
+          name="payment"
           id="pay"
-          value=""
-          onChange=""
+          value={ payment }
+          onChange={ this.handleChange }
           options={ PAYMENT_METHODS }
         />
 
@@ -77,8 +97,8 @@ class Wallet extends React.Component {
           labelTitle="Tag:"
           name="tag"
           id="tag"
-          value=""
-          onChange=""
+          value={ tag }
+          onChange={ this.handleChange }
           options={ TAGS }
         />
       </div>
