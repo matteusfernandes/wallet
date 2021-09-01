@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import edit from '../assets/edit.png';
 import remove from '../assets/remove.png';
+import { removeExpenses as removeExpenseAction } from '../actions';
 import './TableItem.css';
 
 class TableItem extends Component {
   render() {
-    const {
-      expense: {
-        value,
-        description,
-        currency,
-        method,
-        tag,
-        exchangeRates,
-      } } = this.props;
+    const { expense, removeExpense } = this.props;
+    const { value, description, currency, method, tag, exchangeRates } = expense;
 
     const [currencyName] = exchangeRates[currency].name.split('/');
     const { ask } = exchangeRates[currency];
@@ -44,7 +39,7 @@ class TableItem extends Component {
             className="btn"
             type="button"
             data-testid="delete-btn"
-            onClick=""
+            onClick={ () => removeExpense(expense) }
           >
             <img className="icon" src={ remove } alt="Botão de remover" />
           </button>
@@ -58,4 +53,8 @@ TableItem.propTypes = {
   expense: PropTypes.objectOf(PropTypes.any),
 }.isRequired;
 
-export default TableItem;
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (id) => dispatch(removeExpenseAction(id)),
+});
+
+export default connect(null, mapDispatchToProps)(TableItem);
