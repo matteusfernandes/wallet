@@ -3,7 +3,7 @@
 
 - Projeto proposto para o desenvolvimento de uma carteira de controle de gastos com conversor de moedas. Essa aplicação permite ao usuário adicionar, remover e editar um gasto, além de proporcionar a visualização de uma tabelas com todos os seus gastos e a visualização do total de gastos convertidos para uma moeda de escolha;
 
-# Habilitades Desenvolvidas
+# Habilidades Desenvolvidas
 - Criar um store Redux em aplicações React
 - Criar reducers no Redux em aplicações React
 - Criar actions no Redux em aplicações React
