@@ -44,6 +44,6 @@ npm run lint
 npm run lint:styles
 ```
 ---
-#### Para visualizar o **Pull Request** original aberto no repositório da Trybe e tomar nota da avaliação e dos testes, acesse: [Job Insights](https://github.com/tryber/sd-013-b-project-trybewallet/pull/12)
+#### Para visualizar o **Pull Request** original aberto no repositório da Trybe e tomar nota da avaliação e dos testes, acesse: [Trybe Wallet](https://github.com/tryber/sd-013-b-project-trybewallet/pull/12)
 #### 💻 **Desenvolvido por** [@matteusfernandes](https://github.com/matteusfernandes) • 2022 🔗 [LinkedIn](https://www.linkedin.com/in/matteusfernandes/)
 
