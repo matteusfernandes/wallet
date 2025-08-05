@@ -1,27 +1,43 @@
 {
-  "name": "wallet-next",
-  "version": "0.1.0",
+  "name": "trybewallet-next",
+  "version": "2.0.0",
+  "description": "TrybeWallet modernizado com Next.js, TypeScript e Zustand",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "legacy": "cd legado && NODE_OPTIONS=\"--openssl-legacy-provider\" npm start"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "file-saver": "^2.0.5",
+    "html2canvas": "^1.4.1",
+    "immer": "^10.1.1",
+    "jspdf": "^3.0.1",
+    "lucide-react": "^0.536.0",
+    "next": "15.4.5",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "next": "15.4.5"
+    "react-hook-form": "^7.62.0",
+    "recharts": "^3.1.1",
+    "tailwind-merge": "^3.3.1",
+    "zod": "^4.0.14",
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/file-saver": "^2.0.7",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.4.5",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }

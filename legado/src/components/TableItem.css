@@ -1,0 +1,15 @@
+.icon {
+  margin-right: 8px;
+  max-width: 30px;
+}
+
+.line {
+  background-color: white;
+  color: black;
+}
+
+.btn {
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+}

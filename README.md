@@ -1,36 +1,205 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TrybeWallet Next.js - Versão 2.0.0
 
-## Getting Started
+## 🚀 Modernização Completa da Carteira Digital
 
-First, run the development server:
+Uma versão completamente modernizada do TrybeWallet, refatorada de React 16 + Redux para **Next.js 15** + **TypeScript** + **Zustand**, mantendo todas as funcionalidades originais e adicionando recursos avançados.
 
+## ✨ Principais Melhorias
+
+### 🔄 Stack Tecnológica Moderna
+- **Next.js 15.4.5** - Framework React de última geração
+- **React 19.1.0** - Hooks modernos e performance otimizada
+- **TypeScript** - Tipagem estática para maior confiabilidade  
+- **Zustand 5.0.7** - Gerenciamento de estado simplificado e poderoso
+- **Tailwind CSS 4** - Estilização moderna e responsiva
+- **Zod 4.0.14** - Validação de formulários type-safe
+
+### 🎯 Novas Funcionalidades
+- **📊 Gráficos Interativos** - Visualização de gastos com Recharts
+- **🏷️ Categorias Personalizadas** - Crie suas próprias categorias de gastos
+- **📤 Exportação Múltipla** - PDF, CSV e JSON com dados formatados  
+- **🔄 Sincronização em Tempo Real** - Câmbio atualizado automaticamente
+- **📱 Interface Responsiva** - Design moderno adaptável a todos os dispositivos
+- **🎨 Sistema de Cores Dinâmico** - Paleta de cores inteligente para gráficos
+
+### 🛠️ Experiência do Desenvolvedor
+- **TypeScript** completo com tipagem robusta
+- **Validação Zod** para formulários seguros
+- **Middleware Immer** para atualizações imutáveis
+- **Persistência automática** de dados com Zustand
+- **DevTools integrados** para debugging
+- **Arquitetura modular** e escalável
+
+## 📦 Instalação e Uso
+
+### Requisitos
+- Node.js 18+ 
+- npm ou yarn
+
+### Executar a versão moderna
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Acessar versão legado preservada
+```bash
+npm run legacy
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🔑 Credenciais para Teste
+Para testar a aplicação, use qualquer email válido e senha com pelo menos 6 caracteres:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Exemplo:**
+- **Email:** `admin@trybewallet.com`
+- **Senha:** `123456`
 
-## Learn More
+*A validação é apenas de formato - não há autenticação real.*
 
-To learn more about Next.js, take a look at the following resources:
+## 🏗️ Arquitetura
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📁 Estrutura de Diretórios
+```
+src/
+├── app/                    # App Router Next.js
+│   ├── page.tsx           # Página de login moderna
+│   ├── dashboard/         # Dashboard principal  
+│   └── charts/            # Análises visuais
+├── components/            # Componentes reutilizáveis
+│   ├── ui/                # Componentes base (Button, etc)
+│   ├── AddExpenseModal.tsx
+│   ├── ExportModal.tsx
+│   ├── ExpenseCharts.tsx
+│   └── CategoryManager.tsx
+├── stores/                # Gerenciamento de estado Zustand
+│   ├── walletStore.ts     # Estado principal da carteira
+│   └── currencyStore.ts   # Cotações e câmbio
+├── lib/                   # Utilitários e configurações
+│   ├── utils.ts           # Funções auxiliares
+│   ├── schemas.ts         # Validação Zod
+│   └── export.ts          # Exportação de dados
+└── legado/                # Código original preservado
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🔄 Gerenciamento de Estado
+```typescript
+// Zustand com TypeScript e Immer
+interface WalletState {
+  user: User | null
+  expenses: Expense[]
+  categories: string[]
+  customCategories: string[]
+}
 
-## Deploy on Vercel
+// Actions type-safe
+interface WalletActions {
+  login: (email: string) => void
+  addExpense: (expense: Omit<Expense, 'id' | 'createdAt'>) => void
+  getTotalExpenses: () => number
+  // ... mais actions
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 Funcionalidades Destacadas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 📊 Dashboard Inteligente
+- **Cards informativos** com métricas principais
+- **Tabela dinâmica** de despesas com ações
+- **Filtragem e busca** em tempo real
+- **Navegação intuitiva** entre seções
+
+### 📈 Análises Visuais
+- **Gráfico de Pizza** - Gastos por categoria
+- **Gráfico de Barras** - Evolução temporal
+- **Estatísticas detalhadas** - Métricas calculadas automaticamente
+- **Exportação de gráficos** em PNG
+
+### 💾 Exportação de Dados
+- **PDF Formatado** - Relatório profissional com tabelas
+- **CSV para Excel** - Dados estruturados para análise
+- **JSON Técnico** - Backup completo dos dados
+- **Nomes personalizados** de arquivos
+
+### 🏷️ Gestão de Categorias
+- **Categorias padrão** - 9 categorias pré-definidas
+- **Categorias personalizadas** - Crie quantas precisar  
+- **Validação inteligente** - Evita duplicações
+- **Exclusão segura** - Confirmação antes de remover
+
+## 🔧 Tecnologias e Dependências
+
+### Core
+- **Next.js** `15.4.5` - Framework React
+- **React** `19.1.0` - Biblioteca de UI
+- **TypeScript** `5` - Tipagem estática
+- **Tailwind CSS** - Styling moderno
+
+### Estado e Dados
+- **Zustand** `5.0.7` - Gerenciamento de estado
+- **Immer** - Updates imutáveis
+- **Zod** `4.0.14` - Validação de esquemas
+
+### UI e Formulários  
+- **React Hook Form** `7.62.0` - Formulários performáticos
+- **Lucide React** - Ícones modernos
+- **Class Variance Authority** - Componentes com variantes
+
+### Gráficos e Exportação
+- **Recharts** `3.1.1` - Gráficos responsivos
+- **jsPDF** - Geração de PDFs
+- **FileSaver.js** - Download de arquivos
+- **html2canvas** - Captura de elementos
+
+## 🌟 Diferenciais da Modernização
+
+### Antes (Legado)
+- React 16 com class components
+- Redux complexo com boilerplate
+- JavaScript puro sem tipagem
+- CSS tradicional
+- Funcionalidades básicas
+
+### Depois (Moderno)
+- React 19 com hooks otimizados
+- Zustand simples e poderoso
+- TypeScript com segurança total
+- Tailwind CSS responsivo
+- Funcionalidades avançadas (gráficos, export, categorias)
+
+## 🚀 Performance e Otimização
+
+- **Bundle otimizado** com Next.js
+- **Code splitting** automático
+- **Lazy loading** de componentes pesados
+- **Caching inteligente** de requisições de câmbio
+- **Persistência local** eficiente
+
+## 📱 Responsividade
+
+- **Mobile First** - Funciona perfeitamente em celulares
+- **Tablet otimizado** - Layout adaptado para tablets  
+- **Desktop completo** - Máximo aproveitamento de tela
+- **Componentes flexíveis** - Se adaptam a qualquer resolução
+
+## 🔐 Segurança e Validação
+
+- **Validação client-side** com Zod
+- **TypeScript** previne erros em tempo de compilação
+- **Sanitização de inputs** para prevenção de XSS
+- **Estado imutável** com Immer
+
+## 🎯 Próximos Passos
+
+- [ ] Temas escuro/claro
+- [ ] PWA (Progressive Web App)
+- [ ] Sincronização em nuvem
+- [ ] Relatórios avançados
+- [ ] API própria para dados
+
+## 🤝 Contribuições
+
+Este projeto representa uma modernização completa, mantendo a essência do TrybeWallet original enquanto adiciona funcionalidades modernas e uma experiência de usuário superior.
+
+---
+
+**TrybeWallet Next.js v2.0.0** - Construído com ❤️ e tecnologias modernas

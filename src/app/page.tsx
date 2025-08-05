@@ -1,103 +1,143 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Eye, EyeOff, Wallet, LogIn } from 'lucide-react'
+
+import { useWalletStore } from '@/stores/walletStore'
+import { loginSchema, type LoginFormData } from '@/lib/schemas'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+
+export default function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter()
+  const { login } = useWalletStore()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    mode: 'onChange',
+  })
+
+  const onSubmit = (data: LoginFormData) => {
+    login(data.email)
+    router.push('/dashboard')
+  }
+
+  const handleLegacyAccess = () => {
+    window.open('/legado', '_blank')
+  }
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        {/* Logo e Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary text-primary-foreground rounded-full mb-4">
+            <Wallet size={32} />
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">TrybeWallet</h1>
+          <p className="text-gray-600">Gerencie suas finanças com inteligência</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Card de Login */}
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* Campo Email */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                placeholder="seu@email.com"
+                className={cn(
+                  'w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-gray-900 bg-white placeholder-gray-400',
+                  errors.email ? 'border-red-500' : 'border-gray-300'
+                )}
+                {...register('email')}
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+              )}
+            </div>
+
+            {/* Campo Senha */}
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                Senha
+              </label>
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Sua senha"
+                  className={cn(
+                    'w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors text-gray-900 bg-white placeholder-gray-400',
+                    errors.password ? 'border-red-500' : 'border-gray-300'
+                  )}
+                  {...register('password')}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
+              )}
+            </div>
+
+            {/* Botão de Login */}
+            <Button
+              type="submit"
+              disabled={!isValid}
+              className="w-full wallet-gradient hover:opacity-90 transition-opacity h-11 rounded-md px-8"
+            >
+              <LogIn className="mr-2" size={20} />
+              Entrar
+            </Button>
+          </form>
+
+          {/* Divider */}
+          <div className="my-6 flex items-center">
+            <div className="flex-1 border-t border-gray-300" />
+            <span className="px-4 text-sm text-gray-500">ou</span>
+            <div className="flex-1 border-t border-gray-300" />
+          </div>
+
+          {/* Acesso à versão legado */}
+          <Button
+            type="button"
+            onClick={handleLegacyAccess}
+            className="w-full border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900"
+          >
+            <Wallet className="mr-2" size={20} />
+            Acessar Versão Legado
+          </Button>
+        </div>
+
+        {/* Features */}
+        <div className="mt-8 text-center text-sm text-gray-600">
+          <p className="mb-2">✨ Versão moderna com:</p>
+          <div className="flex flex-wrap justify-center gap-2">
+            <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">Next.js</span>
+            <span className="bg-green-100 text-green-800 px-2 py-1 rounded">TypeScript</span>
+            <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded">Zustand</span>
+            <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded">Gráficos</span>
+          </div>
+        </div>
+      </div>
     </div>
-  );
+  )
 }
