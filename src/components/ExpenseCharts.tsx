@@ -165,7 +165,7 @@ export default function ExpenseCharts({ className }: ExpenseChartsProps) {
               {categoryData[0]?.name || 'N/A'}
             </p>
             <p className="text-sm text-gray-500">
-              {categoryData[0]?.formattedValue || 'R$ 0,00'}
+              {categoryData[0]?.formattedValue || formatCurrency(0, 'BRL')}
             </p>
           </div>
           <div className="text-center">

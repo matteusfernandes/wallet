@@ -6,12 +6,75 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+// Mapeamento de símbolos de moedas
+const currencySymbols: Record<string, string> = {
+  'BRL': 'R$',
+  'USD': '$',
+  'EUR': '€',
+  'GBP': '£',
+  'JPY': '¥',
+  'CAD': 'C$',
+  'AUD': 'A$',
+  'CHF': 'CHF',
+  'CNY': '¥',
+  'BTC': '₿',
+  'ETH': 'Ξ',
+  'LTC': 'Ł',
+  'XRP': 'XRP',
+  'ARS': '$',
+}
+
+// Mapeamento de códigos de moeda para Intl.NumberFormat
+const currencyCodeMapping: Record<string, string> = {
+  'BRL': 'BRL',
+  'USD': 'USD',
+  'EUR': 'EUR',
+  'GBP': 'GBP',
+  'JPY': 'JPY',
+  'CAD': 'CAD',
+  'AUD': 'AUD',
+  'CHF': 'CHF',
+  'CNY': 'CNY',
+  'ARS': 'ARS',
+  // Criptomoedas usam formatação personalizada
+  'BTC': 'USD',
+  'ETH': 'USD',
+  'LTC': 'USD',
+  'XRP': 'USD',
+}
+
 // Formatador de moeda
 export function formatCurrency(value: number, currency: string = 'BRL'): string {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: currency === 'BRL' ? 'BRL' : 'USD',
-  }).format(value)
+  // Para criptomoedas, usar formatação personalizada
+  if (['BTC', 'ETH', 'LTC', 'XRP'].includes(currency)) {
+    const symbol = currencySymbols[currency] || currency
+    return `${symbol} ${value.toLocaleString('pt-BR', { 
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 8
+    })}`
+  }
+
+  // Para moedas tradicionais, usar Intl.NumberFormat
+  const mappedCurrency = currencyCodeMapping[currency] || 'USD'
+  
+  try {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: mappedCurrency,
+    }).format(value)
+  } catch (error) {
+    // Fallback para moedas não suportadas pelo Intl
+    const symbol = currencySymbols[currency] || currency
+    return `${symbol} ${value.toLocaleString('pt-BR', { 
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    })}`
+  }
+}
+
+// Função para obter apenas o símbolo da moeda
+export function getCurrencySymbol(currency: string): string {
+  return currencySymbols[currency] || currency
 }
 
 // Formatador de data
