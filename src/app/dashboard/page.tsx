@@ -41,6 +41,7 @@ export default function DashboardPage() {
   const [showAddExpense, setShowAddExpense] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
   const [showCategoryManager, setShowCategoryManager] = useState(false)
+  const [editingExpense, setEditingExpense] = useState<string | null>(null)
 
   useEffect(() => {
     if (!user?.email || !user?.isLoggedIn) {
@@ -61,8 +62,13 @@ export default function DashboardPage() {
   }
 
   const handleEditExpense = (id: string) => {
-    // TODO: Implementar edição
-    console.log('Edit expense:', id)
+    setEditingExpense(id)
+    setShowAddExpense(true)
+  }
+
+  const handleCloseExpenseModal = () => {
+    setShowAddExpense(false)
+    setEditingExpense(null)
   }
 
   const handleDeleteExpense = (id: string) => {
@@ -307,7 +313,8 @@ export default function DashboardPage() {
       {/* Modals */}
       <AddExpenseModal 
         isOpen={showAddExpense} 
-        onClose={() => setShowAddExpense(false)} 
+        onClose={handleCloseExpenseModal}
+        editingExpenseId={editingExpense}
       />
       
       <ExportModal

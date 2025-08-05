@@ -14,10 +14,11 @@ import { cn } from '@/lib/utils'
 interface AddExpenseModalProps {
   isOpen: boolean
   onClose: () => void
+  editingExpenseId?: string | null
 }
 
-export default function AddExpenseModal({ isOpen, onClose }: AddExpenseModalProps) {
-  const { addExpense, categories, customCategories } = useWalletStore()
+export default function AddExpenseModal({ isOpen, onClose, editingExpenseId }: AddExpenseModalProps) {
+  const { addExpense, updateExpense, expenses, categories, customCategories } = useWalletStore()
   const { exchangeRates, fetchExchangeRates } = useCurrencyStore()
   
   const [selectedCurrency, setSelectedCurrency] = useState('BRL')
@@ -39,6 +40,24 @@ export default function AddExpenseModal({ isOpen, onClose }: AddExpenseModalProp
 
   const watchedCurrency = watch('currency')
 
+  // Encontrar a despesa sendo editada
+  const editingExpense = editingExpenseId 
+    ? expenses.find(expense => expense.id === editingExpenseId)
+    : null
+
+  // Popular o formulário quando estiver editando
+  useEffect(() => {
+    if (editingExpense) {
+      reset({
+        description: editingExpense.description,
+        value: editingExpense.value,
+        currency: editingExpense.currency,
+        method: editingExpense.method,
+        tag: editingExpense.tag,
+      })
+    }
+  }, [editingExpense, reset])
+
   useEffect(() => {
     if (watchedCurrency !== 'BRL') {
       fetchExchangeRates()
@@ -51,7 +70,14 @@ export default function AddExpenseModal({ isOpen, onClose }: AddExpenseModalProp
       exchangeRates: watchedCurrency !== 'BRL' ? exchangeRates : undefined,
     }
     
-    addExpense(expenseData)
+    if (editingExpenseId && editingExpense) {
+      // Editar despesa existente
+      updateExpense(editingExpenseId, expenseData)
+    } else {
+      // Adicionar nova despesa
+      addExpense(expenseData)
+    }
+    
     reset()
     onClose()
   }
@@ -80,7 +106,9 @@ export default function AddExpenseModal({ isOpen, onClose }: AddExpenseModalProp
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-semibold text-gray-900">Nova Despesa</h2>
+          <h2 className="text-xl font-semibold text-gray-900">
+            {editingExpenseId ? 'Editar Despesa' : 'Nova Despesa'}
+          </h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -233,7 +261,7 @@ export default function AddExpenseModal({ isOpen, onClose }: AddExpenseModalProp
               className="flex-1 wallet-gradient hover:opacity-90 transition-opacity"
             >
               <Save className="mr-2" size={16} />
-              Salvar
+              {editingExpenseId ? 'Atualizar' : 'Salvar'}
             </Button>
           </div>
         </form>
