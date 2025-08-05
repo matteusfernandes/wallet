@@ -18,9 +18,12 @@ Uma versão completamente modernizada do TrybeWallet, refatorada de React 16 + R
 - **📊 Gráficos Interativos** - Visualização de gastos com Recharts
 - **🏷️ Categorias Personalizadas** - Crie suas próprias categorias de gastos
 - **📤 Exportação Múltipla** - PDF, CSV e JSON com dados formatados  
+- **✏️ Edição de Despesas** - Edite qualquer despesa existente com facilidade
+- **💰 Sistema de Moedas Completo** - 14 moedas com símbolos nativos (₿, €, £, ¥, etc.)
 - **🔄 Sincronização em Tempo Real** - Câmbio atualizado automaticamente
 - **📱 Interface Responsiva** - Design moderno adaptável a todos os dispositivos
 - **🎨 Sistema de Cores Dinâmico** - Paleta de cores inteligente para gráficos
+- **♿ Alta Acessibilidade** - Contraste otimizado e navegação por teclado
 
 ### 🛠️ Experiência do Desenvolvedor
 - **TypeScript** completo com tipagem robusta
@@ -95,6 +98,8 @@ interface WalletState {
 interface WalletActions {
   login: (email: string) => void
   addExpense: (expense: Omit<Expense, 'id' | 'createdAt'>) => void
+  updateExpense: (id: string, updates: Partial<Expense>) => void
+  removeExpense: (id: string) => void
   getTotalExpenses: () => number
   // ... mais actions
 }
@@ -104,7 +109,8 @@ interface WalletActions {
 
 ### 📊 Dashboard Inteligente
 - **Cards informativos** com métricas principais
-- **Tabela dinâmica** de despesas com ações
+- **Tabela dinâmica** de despesas com ações CRUD completas
+- **Edição inline** - Modifique despesas diretamente na tabela
 - **Filtragem e busca** em tempo real
 - **Navegação intuitiva** entre seções
 
@@ -125,6 +131,16 @@ interface WalletActions {
 - **Categorias personalizadas** - Crie quantas precisar  
 - **Validação inteligente** - Evita duplicações
 - **Exclusão segura** - Confirmação antes de remover
+
+### 💰 Sistema Monetário Avançado
+- **14 moedas suportadas** - Tradicionais e criptomoedas
+- **Símbolos nativos** - R$, $, €, £, ¥, C$, A$, CHF, ₿, Ξ, Ł, XRP
+- **Formatação inteligente** - Intl.NumberFormat para precisão
+- **Criptomoedas** - Suporte a Bitcoin, Ethereum, Litecoin, Ripple
+- **Conversão automática** - Valores sempre atualizados
+- **Fallback robusto** - Suporte a moedas não catalogadas
+
+*📖 Ver documentação completa em: [`CURRENCY_SYMBOLS.md`](./CURRENCY_SYMBOLS.md)*
 
 ## 🔧 Tecnologias e Dependências
 
@@ -188,8 +204,20 @@ interface WalletActions {
 - **Sanitização de inputs** para prevenção de XSS
 - **Estado imutável** com Immer
 
+## ♿ Acessibilidade e UX
+
+- **Alto contraste** - Cores otimizadas para legibilidade
+- **Navegação por teclado** - Totalmente acessível
+- **Feedback visual** - Estados claros de hover e focus
+- **Tipografia legível** - Fontes e tamanhos otimizados
+- **Cores semânticas** - Vermelho para remoção, verde para adição
+- **Loading states** - Indicadores visuais de carregamento
+
 ## 🎯 Próximos Passos
 
+- [x] ✅ Edição completa de despesas
+- [x] ✅ Sistema de símbolos de moedas
+- [x] ✅ Melhorias de acessibilidade
 - [ ] Temas escuro/claro
 - [ ] PWA (Progressive Web App)
 - [ ] Sincronização em nuvem
@@ -199,6 +227,32 @@ interface WalletActions {
 ## 🤝 Contribuições
 
 Este projeto representa uma modernização completa, mantendo a essência do TrybeWallet original enquanto adiciona funcionalidades modernas e uma experiência de usuário superior.
+
+### 📈 Estatísticas do Projeto
+- **100% TypeScript** - Tipagem completa em toda aplicação
+- **14 moedas suportadas** - Sistema monetário robusto
+- **Zero dependências desnecessárias** - Bundle otimizado
+- **Componentes reutilizáveis** - Arquitetura modular
+- **Testes de acessibilidade** - WCAG 2.1 AA compatível
+
+### 🚀 Comandos Disponíveis
+
+```bash
+# Desenvolvimento moderno
+npm run dev          # Inicia servidor Next.js (porta 3000)
+
+# Versão legado preservada
+npm run legacy       # Inicia versão React 16 (porta 3001)
+
+# Produção
+npm run build        # Build para produção
+npm run start        # Inicia servidor de produção
+npm run lint         # Verifica qualidade do código
+```
+
+### 🌐 URLs de Acesso
+- **Versão Moderna**: http://localhost:3000
+- **Versão Legado**: http://localhost:3001
 
 ---
 
